@@ -1,0 +1,66 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sale_order_view_inherit">
+            <field name="name">sale.order.view.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='name']"
+                       position="after">
+                    <field name="weight"/>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_uom_qty']"
+                       position="after">
+                    <field name="total_weight"/>
+                    <field name="rate_per_kg"/>
+                </xpath>
+            </field>
+        </record>
+        <!--        &lt;!&ndash; Inherit Form View to Modify it &ndash;&gt;-->
+        <record id="inherit_form_move_line_id" model="ir.ui.view">
+            <field name="name">inherit_form_move_line_id</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="weight"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="stock_picking_form_inherit" model="ir.ui.view">
+            <field name="name">stock_picking_form_inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']" position="after">
+                    <field name="weight"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="account_move_form_inherit" model="ir.ui.view">
+            <field name="name">account.move.form_inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']"
+                       position="after">
+                    <field name="weight"/>
+                    <field name="total_weight"/>
+                    <field name="rate_per_kg"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='account_id']" position="after">
+                    <field name="weight" invisible="1"/>
+                    <field name="total_weight" invisible="1"/>
+                    <field name="rate_per_kg" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
